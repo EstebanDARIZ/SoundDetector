@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 
 from moviepy import VideoFileClip
@@ -42,7 +44,7 @@ class AudioProcessor:
             start_index = i * window_size
             end_index = start_index + window_size
             window = self.audio_signal[start_index:end_index]
-            rms = compute_rms(window)
+            rms = compute_rms_db(window)
             rms_values.append(rms)
         
         times = np.arange(len(rms_values)) * window_duration
