@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
+import os 
 
 from moviepy import VideoFileClip
 from config import VIDEO_PATH, FILE_PATH, THRESHOLD, WINDOW_DURATION
@@ -65,6 +66,7 @@ class SoundDetector():
         return detections
     
     def save_detections(self, detections : np.ndarray, file_path : str):
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as f :
             for d in detections:
                 f.write(f"{int(d)}\n")
@@ -90,7 +92,7 @@ def main():
 
     detector = SoundDetector(THRESHOLD)
     detections = detector.detect(times, rms_values)
-    # detector.save_detections(detections, FILE_PATH)
+    detector.save_detections(detections, FILE_PATH)
 
     plot_rms(times, rms_values, THRESHOLD)
 
